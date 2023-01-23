@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import styled from 'styled-components';
+import SelectMediaDevices from './SelectMediaDevices';
+import useVideoPlayer from './hooks/useVideoPlayer';
+
+const CustomVideo = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+const SelectContainer = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  background: black;
+  color: white;
+  opacity: 0.5;
+  
+`
 
 function App() {
+  const playerRef = React.useRef(null);
+  useVideoPlayer(playerRef, '')
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CustomVideo ref={playerRef}></CustomVideo>
+      <SelectContainer>
+        <SelectMediaDevices></SelectMediaDevices>
+      </SelectContainer>
     </div>
   );
 }
