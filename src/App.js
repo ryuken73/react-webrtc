@@ -21,12 +21,12 @@ const SelectContainer = styled.div`
 
 function App() {
   const playerRef = React.useRef(null);
-  useVideoPlayer(playerRef, '')
+  // useVideoPlayer(playerRef, '')
   return (
     <div className="App">
-      <CustomVideo ref={playerRef}></CustomVideo>
+      <CustomVideo autoPlay ref={playerRef}></CustomVideo>
       <SelectContainer>
-        <SelectMediaDevices></SelectMediaDevices>
+        <SelectMediaDevices player={playerRef}></SelectMediaDevices>
       </SelectContainer>
     </div>
   );

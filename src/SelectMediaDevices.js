@@ -13,7 +13,8 @@ async function openCamera(cameraId, minWidth, minHeight) {
     return await navigator.mediaDevices.getUserMedia(constraints);
 }
 
-export default function SelectMediaDevices() {
+export default function SelectMediaDevices(props) {
+    const { player } = props;
     const [devices, setDevices] = React.useState([]);
     const getMediaDevices = React.useCallback(() => {
         async function getConnectedDevices(type) {
@@ -22,10 +23,15 @@ export default function SelectMediaDevices() {
             return devices.filter(device => device.kind === type)
         }
         getConnectedDevices('videoinput')
-        .then(devices => {
+        .then(async (devices) => {
+            if(devices && devices.length > 0){
+                const stream = await openCamera(devices[0].deviceId, 1280, 720);
+                player.current.srcObject = stream;
+            }
             setDevices(devices);
         });
     }, [])
+    console.log(devices)
     return (
         <>
             <button onClick={getMediaDevices}>refresh media deivces</button>
